@@ -1,0 +1,21 @@
+{
+    "name": "pollstar-front",
+    "version": "1.0.0",
+    "description": "Pollstar front",
+    "main": "build/app.js",
+    "repository": "https://github.com/ynov-b3-2019-nodejs/projects-acteamel.git",
+    "author": "Jérémy Surieux <jeremy.surieux@ynov.com>",
+    "contributors": [
+      {
+        "name": "Camille Legey",
+        "email": "camille.legey@ynov.com"
+      },
+      {
+        "name": "Théo Schmidt",
+        "email": "theo.schmidt@ynov.com"
+      }
+    ],
+    "license": "MIT",
+    "private": true
+  }
+  
