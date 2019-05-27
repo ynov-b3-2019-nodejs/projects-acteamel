@@ -1,4 +1,5 @@
 import * as Express from 'express';
+import ServiceContainer from './services/service-container';
 
 export default class Server {
 
@@ -12,9 +13,11 @@ export default class Server {
     }
 
     private readonly app: Express.Application;
+    private readonly container: ServiceContainer;
 
     public constructor() {
         this.app = this.createExpressApplication();
+        this.container = this.createServiceContainer();
     }
 
     public async start(port: number): Promise<void> {
@@ -26,5 +29,9 @@ export default class Server {
     private createExpressApplication(): Express.Application {
         const app = Express.application;
         return app;
+    }
+
+    private createServiceContainer(): ServiceContainer {
+        return new ServiceContainer();
     }
 }
