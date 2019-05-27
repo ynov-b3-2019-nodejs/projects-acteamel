@@ -1,14 +1,17 @@
-import { Mongoose } from "mongoose";
+import { Mongoose, Model } from "mongoose";
 import Service from "./service";
 import ServiceContainer from "./service-container";
+import createPollModel, { PollInstance } from "../models/poll-model";
 
 export default class databaseService extends Service {
     
     private readonly mongooseInstance: Mongoose;
+    public readonly polls: Model<PollInstance>;
 
     public constructor(container: ServiceContainer) {
         super(container);
         this.mongooseInstance = this.createMongooseInstance();
+        this.polls = createPollModel(this.mongooseInstance);
     }
 
     public async connect(): Promise<void> {
