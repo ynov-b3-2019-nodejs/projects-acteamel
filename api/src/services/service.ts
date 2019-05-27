@@ -4,7 +4,7 @@ export default class Service {
 
     protected readonly container: ServiceContainer;
 
-    public constructor(container: ServiceContainer) {
+    protected constructor(container: ServiceContainer) {
         this.container = container;
     }
 }
