@@ -4,8 +4,16 @@ import { Request, Response } from "express";
 import V1Controller from "./v1-controller";
 import { PollAttributes } from "../../models/poll-model";
 
+/**
+ * Classe gérant le contrôleur de la resource `Poll`.
+ */
 export default class PollController extends V1Controller {
 
+    /**
+     * Construit un nouveau contrôleur de la resource `Poll`.
+     * 
+     * @param container Conteneur de services
+     */
     public constructor(container: ServiceContainer) {
         super(container, '/polls');
 
@@ -15,19 +23,39 @@ export default class PollController extends V1Controller {
         this.update = this.update.bind(this);
         this.destroy = this.destroy.bind(this);
 
-        this.bindRoute(Method.GET, '/', this.showAll);
-        this.bindRoute(Method.GET, '/:id', this.show);
-        this.bindRoute(Method.POST, '/', this.create);
-        this.bindRoute(Method.PUT, '/:id', this.update);
-        this.bindRoute(Method.DELETE, '/:id', this.destroy);
+        this.registerRoute(Method.GET, '/', this.showAll);
+        this.registerRoute(Method.GET, '/:id', this.show);
+        this.registerRoute(Method.POST, '/', this.create);
+        this.registerRoute(Method.PUT, '/:id', this.update);
+        this.registerRoute(Method.DELETE, '/:id', this.destroy);
     }
 
+    /**
+     * Affiche toutes les resources.
+     * 
+     * Méthode : `GET`
+     * Chemin : `/polls`
+     * 
+     * @async
+     * @param req Requête Express
+     * @param res Réponse Express
+     */
     public async showAll(req: Request, res: Response): Promise<any> {
         const polls = await this.container.db.polls.find();
         
         return res.status(200).json({ polls });
     }
 
+    /**
+     * Affiche une resource via son identifiant.
+     * 
+     * Méthode : `GET`
+     * Chemin : `/polls/:id`
+     * 
+     * @async
+     * @param req Requête Express
+     * @param res Réponse Express
+     */
     public async show(req: Request, res: Response): Promise<any> {
         const params: RequestParams = req.params;
 
@@ -44,6 +72,16 @@ export default class PollController extends V1Controller {
         }
     }
 
+    /**
+     * Crée une nouvelle resource.
+     * 
+     * Méthode : `POST`
+     * Chemin : `/polls`
+     * 
+     * @async
+     * @param req Requête Express
+     * @param res Réponse Express
+     */
     public async create(req: Request, res: Response): Promise<any> {
         const body: PollAttributes = req.body;
 
@@ -59,7 +97,17 @@ export default class PollController extends V1Controller {
             return res.status(500).json({ error: err.message });
         }
     }
-
+    
+    /**
+     * Crée une nouvelle resource.
+     * 
+     * Méthode : `PUT`
+     * Chemin : `/polls/:id`
+     * 
+     * @async
+     * @param req Requête Express
+     * @param res Réponse Express
+     */
     public async update(req: Request, res: Response): Promise<any> {
         const params: RequestParams = req.params;
         const body: PollAttributes = req.body;
@@ -79,6 +127,16 @@ export default class PollController extends V1Controller {
         }
     }
 
+    /**
+     * Supprime une resource.
+     * 
+     * Méthode : `DELETE`
+     * Chemin : `/polls/:id`
+     * 
+     * @async
+     * @param req Requête Express
+     * @param res Réponse Express
+     */
     public async destroy(req: Request, res: Response): Promise<any> {
         const params: RequestParams = req.params;
 
