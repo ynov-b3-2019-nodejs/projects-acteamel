@@ -61,6 +61,11 @@ export default class Server {
         this.app.listen(process.env.API_PORT, () => console.log(`Server is listening on port ${process.env.API_PORT}`));
     }
 
+    /**
+     * Crée l'application Express.
+     * 
+     * @returns Application Express créée
+     */
     private createExpressApplication(): Express.Application {
         const app = Express();
 
@@ -71,10 +76,22 @@ export default class Server {
         return app;
     }
 
+    /**
+     * Crée le conteneur de services.
+     * 
+     * @returns Conteneur de services créé
+     */
     private createServiceContainer(): ServiceContainer {
         return new ServiceContainer();
     }
 
+    /**
+     * Crée les contrôleurs.
+     * 
+     * Cette méthode crée également les routeurs Express (un par contrôleur) contenant les routes / endpoints.
+     * 
+     * @returns Contrôleurs créés
+     */
     private createControllers(): Controller[] {
         const controllers = [
             new PollController(this.container)
