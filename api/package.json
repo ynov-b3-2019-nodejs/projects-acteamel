@@ -3,6 +3,12 @@
   "version": "1.0.0",
   "description": "Pollstar API",
   "main": "build/app.js",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "start": "cd ../ && tsc -p api/tsconfig.json && node api/build/app.js",
+    "start-dev": "cd ../ && tsc -p api/tsconfig.json && SET NODE_ENV=development && node api/build/app.js",
+    "start-prod": "cd ../ && tsc -p api/tsconfig.json && SET NODE_ENV=production && node api/build/app.js"
+  },
   "repository": "https://github.com/ynov-b3-2019-nodejs/projects-acteamel.git",
   "author": "Jérémy Surieux <jeremy.surieux@ynov.com>",
   "contributors": [
@@ -16,5 +22,20 @@
     }
   ],
   "license": "MIT",
-  "private": true
+  "private": true,
+  "dependencies": {
+    "@types/mongoose": "^5.5.3",
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.0.0",
+    "express": "^4.17.0",
+    "helmet": "^3.18.0",
+    "mongoose": "^5.5.11"
+  },
+  "devDependencies": {
+    "@types/body-parser": "^1.17.0",
+    "@types/dotenv": "^6.1.1",
+    "@types/express": "^4.16.1",
+    "@types/helmet": "0.0.43",
+    "@types/node": "^12.0.2"
+  }
 }
