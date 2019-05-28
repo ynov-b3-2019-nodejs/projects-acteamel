@@ -3,7 +3,7 @@ import Service from "./service";
 import ServiceContainer from "./service-container";
 import createPollModel, { PollInstance } from "../models/poll-model";
 
-export default class databaseService extends Service {
+export default class DatabaseService extends Service {
     
     private readonly mongooseInstance: Mongoose;
     public readonly polls: Model<PollInstance>;
