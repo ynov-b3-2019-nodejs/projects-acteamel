@@ -3,6 +3,12 @@
   "version": "1.0.0",
   "description": "Pollstar API",
   "main": "build/app.js",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "start": "cd ../ && tsc -p api/tsconfig.json && node api/build/app.js",
+    "start-dev": "cd ../ && tsc -p api/tsconfig.json && SET NODE_ENV=development && node api/build/app.js",
+    "start-prod": "cd ../ && tsc -p api/tsconfig.json && SET NODE_ENV=production && node api/build/app.js"
+  },
   "repository": "https://github.com/ynov-b3-2019-nodejs/projects-acteamel.git",
   "author": "Jérémy Surieux <jeremy.surieux@ynov.com>",
   "contributors": [
