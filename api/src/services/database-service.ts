@@ -15,7 +15,7 @@ export default class DatabaseService extends Service {
     }
 
     public async connect(): Promise<void> {
-        await this.mongooseInstance.connect('mongodb://localhost:27017/pollstar', { useNewUrlParser: true });
+        await this.mongooseInstance.connect(`mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`, { useNewUrlParser: true });
     }
 
     public async disconnect(): Promise<void> {

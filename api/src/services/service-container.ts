@@ -1,4 +1,5 @@
 import DatabaseService from "./database-service";
+import EnvironmentService from "./environment-service";
 
 export default class ServiceContainer {
 
@@ -6,12 +7,22 @@ export default class ServiceContainer {
         loadAll: false
     }
 
+    private _env: EnvironmentService;
     private _db: DatabaseService;
 
     public constructor(options: ServiceContainerOptions = ServiceContainer.DEFAULT_OPTIONS) {
         if (options.loadAll) {
+            this.env;
             this.db;
         }
+    }
+
+    public get env() {
+        if (!this._env) {
+            this._env = new EnvironmentService(this);
+            console.log(`Loaded service ${this._env.constructor.name}`);
+        }
+        return this._env;
     }
 
     public get db() {

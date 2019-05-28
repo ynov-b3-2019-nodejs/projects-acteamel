@@ -28,6 +28,12 @@ export default class Server {
 
     public async start(port: number): Promise<void> {
         try {
+            await this.container.env.loadEnvironment();
+        } catch (err) {
+            console.error(err);
+        }
+
+        try {
             await this.container.db.connect();
             console.log('Connected to database');
         } catch (err) {
