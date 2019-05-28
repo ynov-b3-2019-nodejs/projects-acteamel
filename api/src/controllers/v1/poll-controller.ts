@@ -1,7 +1,8 @@
-import { Method } from "../controller";
+import { Method, RequestParams } from "../controller";
 import ServiceContainer from "../../services/service-container";
 import { Request, Response } from "express";
 import V1Controller from "./v1-controller";
+import { PollAttributes } from "../../models/poll-model";
 
 export default class PollController extends V1Controller {
 
@@ -28,9 +29,7 @@ export default class PollController extends V1Controller {
     }
 
     public async show(req: Request, res: Response): Promise<any> {
-        const params: {
-            id: string;
-        } = req.params;
+        const params: RequestParams = req.params;
 
         try {
             const poll = await this.container.db.polls.findById(params.id);
@@ -46,13 +45,13 @@ export default class PollController extends V1Controller {
     }
 
     public async create(req: Request, res: Response): Promise<any> {
-        const body: {
-            title: string;
-        } = req.body;
+        const body: PollAttributes = req.body;
 
         try {
             const poll = await this.container.db.polls.create({
-                title: body.title
+                title: body.title,
+                options: body.options,
+                choices: body.choices
             });
 
             return res.status(201).json({ poll });
@@ -62,19 +61,15 @@ export default class PollController extends V1Controller {
     }
 
     public async update(req: Request, res: Response): Promise<any> {
-        const params: {
-            id: string;
-        } = req.params;
-        const body: {
-            title: string;
-        } = req.body;
+        const params: RequestParams = req.params;
+        const body: PollAttributes = req.body;
 
         try {
             const poll = await this.container.db.polls.findById(params.id);
 
-            if (body.title !== undefined) {
-                poll.title = body.title;
-            }
+            poll.title = body.title;
+            poll.options = body.options;
+            poll.choices = body.choices;
 
             await poll.save();
 
@@ -85,9 +80,7 @@ export default class PollController extends V1Controller {
     }
 
     public async destroy(req: Request, res: Response): Promise<any> {
-        const params: {
-            id: string;
-        } = req.params;
+        const params: RequestParams = req.params;
 
         try {
             const result = await this.container.db.polls.deleteOne({ _id: params.id });

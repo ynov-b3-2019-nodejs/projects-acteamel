@@ -48,3 +48,9 @@ export enum Method {
     PUT = 'put',
     DELETE = 'delete'
 }
+
+
+
+export interface RequestParams {
+    id: string;
+}
