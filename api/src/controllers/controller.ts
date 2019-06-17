@@ -84,12 +84,3 @@ export enum Method {
     PUT = 'put',
     DELETE = 'delete'
 }
-
-
-
-/**
- * Interface regroupant les différents paramètres des requêtes.
- */
-export interface RequestParams {
-    id: string;
-}
