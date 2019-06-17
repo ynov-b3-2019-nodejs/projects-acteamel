@@ -33,6 +33,8 @@ const schema = new Schema<PollInstance>({
     timestamps: true
 });
 
+schema.path('choices').validate(choices => (choices.length >= 2), 'Minimum 2 choices are required');
+
 
 
 /**
