@@ -33,6 +33,8 @@ const schema = new Schema<PollInstance>({
     timestamps: true
 });
 
+schema.path('choices').validate(choices => (choices.length >= 2), 'Minimum 2 choices are required');
+
 
 
 /**
@@ -57,8 +59,10 @@ export interface PollAttributes extends Attributes {
         multiple: boolean;
     },
     choices: [{
+        _id?: string;
         name: string;
         voters: [{
+            _id?: string;
             ip: string;
         }]
     }]

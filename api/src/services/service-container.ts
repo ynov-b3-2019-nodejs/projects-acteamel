@@ -1,5 +1,6 @@
 import DatabaseService from "./database-service";
 import EnvironmentService from "./environment-service";
+import WebSocketService from "./websocket-service";
 
 /**
  * Classe gérant le conteneur de services.
@@ -15,6 +16,7 @@ export default class ServiceContainer {
 
     private _env: EnvironmentService;
     private _db: DatabaseService;
+    private _socket: WebSocketService;
 
     /**
      * Construit un nouveau conteneur de services.
@@ -25,6 +27,7 @@ export default class ServiceContainer {
         if (options.loadAll) {
             this.env;
             this.db;
+            this.socket;
         }
     }
 
@@ -40,7 +43,7 @@ export default class ServiceContainer {
     }
 
     /**
-     * Service de la base de données
+     * Service de la base de données.
      */
     public get db() {
         if (!this._db) {
@@ -48,6 +51,17 @@ export default class ServiceContainer {
             console.log(`Loaded service ${this._db.constructor.name}`);
         }
         return this._db;
+    }
+
+    /**
+     * Service de WebSocket.
+     */
+    public get socket() {
+        if (!this._socket) {
+            this._socket = new WebSocketService(this);
+            console.log(`Loaded service ${this._socket.constructor.name}`);
+        }
+        return this._socket;
     }
 }
 

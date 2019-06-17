@@ -1,6 +1,7 @@
 import * as Express from 'express';
 import bodyParser = require('body-parser');
 import helmet = require('helmet');
+import cors = require('cors');
 import ServiceContainer from './services/service-container';
 import Controller from './controllers/controller';
 import PollController from './controllers/v1/poll-controller';
@@ -59,6 +60,9 @@ export default class Server {
         }
         
         this.app.listen(process.env.API_PORT, () => console.log(`Server is listening on port ${process.env.API_PORT}`));
+
+        this.container.socket.start();
+        console.log(`WebSocket is listening on port ${process.env.WEBSOCKET_PORT}`)
     }
 
     /**
@@ -72,6 +76,7 @@ export default class Server {
         app.use(bodyParser.urlencoded({ extended: true }));
         app.use(bodyParser.json());
         app.use(helmet());
+        app.use(cors());
         
         return app;
     }
@@ -101,9 +106,9 @@ export default class Server {
         for (const controller of controllers) {
             this.app.use(controller.rootPath, controller.router);
             
-            console.log(`Routes for ${controller.rootPath} (${controller.constructor.name}) :`);
-            for (const route of controller.routes) {
-                console.log(`    - ${route.method.toUpperCase()} ${route.path} (${route.name})`);
+            console.log(`Endpoints for ${controller.rootPath} (${controller.constructor.name}) :`);
+            for (const endpoint of controller.endpoints) {
+                console.log(`    - ${endpoint.method.toUpperCase()} ${endpoint.path} (${endpoint.name})`);
             }
         }
 
