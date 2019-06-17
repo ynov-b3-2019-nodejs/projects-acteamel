@@ -14,7 +14,7 @@ export default class Controller {
     protected readonly container: ServiceContainer;
     public readonly router: Router;
     public readonly rootPath: string;
-    public readonly routes: Route[];
+    public readonly endpoints: Endpoint[];
 
     /**
      * Construit un nouveau contrôleur.
@@ -26,21 +26,21 @@ export default class Controller {
         this.container = container;
         this.router = this.createExpressRouter();
         this.rootPath = rootPath;
-        this.routes = [];
+        this.endpoints = [];
     }
 
     /**
-     * Enregistre une route.
+     * Enregistre un endpoint.
      * 
-     * Cette méthode doit être appelée dans le constructeur du contrôleur pour chaque route.
+     * Cette méthode doit être appelée dans le constructeur du contrôleur pour chaque endpoint.
      * 
      * @param method Méthode HTTP
      * @param path Chemin
-     * @param handlers Fonctions exécutées lorsque la route est déclenchée
+     * @param handlers Fonctions exécutées lorsque l'endpoint est déclenché
      */
-    protected registerRoute(method: Method, path: string, ...handlers: RequestHandler[]): void {
+    protected registerEndpoint(method: Method, path: string, ...handlers: RequestHandler[]): void {
         this.router[method](path, this.triggerEndpointHandler, handlers);
-        this.routes.push({
+        this.endpoints.push({
             name: `${this.constructor.name}#${handlers[handlers.length - 1].name}`,
             method,
             path,
@@ -77,9 +77,9 @@ export default class Controller {
 
 
 /**
- * Interface gérant les routes.
+ * Interface gérant les endpoints.
  */
-export interface Route {
+export interface Endpoint {
     name: string;
     method: Method;
     path: string;

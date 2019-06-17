@@ -22,10 +22,10 @@ export default class PollController extends V1Controller {
         this.createHandler = this.createHandler.bind(this);
         this.addVoterHandler = this.addVoterHandler.bind(this);
 
-        this.registerRoute(Method.GET, '/', this.showAllHandler);
-        this.registerRoute(Method.GET, '/:id', this.showHandler);
-        this.registerRoute(Method.POST, '/', this.createHandler);
-        this.registerRoute(Method.PATCH, '/:id/choices/:choiceId/addVoter', this.addVoterHandler);
+        this.registerEndpoint(Method.GET, '/', this.showAllHandler);
+        this.registerEndpoint(Method.GET, '/:id', this.showHandler);
+        this.registerEndpoint(Method.POST, '/', this.createHandler);
+        this.registerEndpoint(Method.PATCH, '/:id/choices/:choiceId/addVoter', this.addVoterHandler);
     }
 
     /**

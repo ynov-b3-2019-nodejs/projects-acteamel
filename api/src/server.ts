@@ -106,9 +106,9 @@ export default class Server {
         for (const controller of controllers) {
             this.app.use(controller.rootPath, controller.router);
             
-            console.log(`Routes for ${controller.rootPath} (${controller.constructor.name}) :`);
-            for (const route of controller.routes) {
-                console.log(`    - ${route.method.toUpperCase()} ${route.path} (${route.name})`);
+            console.log(`Endpoints for ${controller.rootPath} (${controller.constructor.name}) :`);
+            for (const endpoint of controller.endpoints) {
+                console.log(`    - ${endpoint.method.toUpperCase()} ${endpoint.path} (${endpoint.name})`);
             }
         }
 
