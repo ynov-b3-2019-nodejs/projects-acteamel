@@ -1,8 +1,8 @@
-import { Method, RequestParams } from "../controller";
+import { Method } from "../controller";
 import ServiceContainer from "../../services/service-container";
 import { Request, Response } from "express";
 import V1Controller from "./v1-controller";
-import { PollAttributes, PollInstance } from "../../models/poll-model";
+import { PollInstance } from "../../models/poll-model";
 
 /**
  * Classe gérant le contrôleur de la ressource `Poll`.
@@ -20,22 +20,16 @@ export default class PollController extends V1Controller {
         this.showAll = this.showAll.bind(this);
         this.show = this.show.bind(this);
         this.create = this.create.bind(this);
-        this.update = this.update.bind(this);
-        this.modify = this.modify.bind(this);
-        this.destroy = this.destroy.bind(this);
         this.addVoter = this.addVoter.bind(this);
 
         this.registerRoute(Method.GET, '/', this.showAll);
         this.registerRoute(Method.GET, '/:id', this.show);
         this.registerRoute(Method.POST, '/', this.create);
-        this.registerRoute(Method.PUT, '/:id', this.update);
-        this.registerRoute(Method.PATCH, '/:id', this.modify);
-        this.registerRoute(Method.DELETE, '/:id', this.destroy);
         this.registerRoute(Method.PATCH, '/:id/choices/:choiceId/addVoter', this.addVoter);
     }
 
     /**
-     * Affiche toutes les ressource.
+     * Affiche tous les sondages.
      * 
      * Méthode : `GET`
      * Chemin : `/polls`
@@ -51,17 +45,18 @@ export default class PollController extends V1Controller {
     }
 
     /**
-     * Affiche une ressource via son identifiant.
+     * Affiche un sondage via son identifiant.
      * 
-     * Méthode : `GET`
-     * Chemin : `/polls/:id`
+     * Cette méthode est un handler :
+     * - Méthode : `GET`
+     * - Chemin : `/polls/:id`
      * 
      * @async
      * @param req Requête Express
      * @param res Réponse Express
      */
     public async show(req: Request, res: Response): Promise<any> {
-        const params: RequestParams = req.params;
+        const params = req.params;
 
         try {
             const poll = await this.container.db.polls.findById(params.id);
@@ -77,17 +72,18 @@ export default class PollController extends V1Controller {
     }
 
     /**
-     * Crée une nouvelle ressource.
+     * Crée un nouveau sondage.
      * 
-     * Méthode : `POST`
-     * Chemin : `/polls`
+     * Cette méthode est un handler :
+     * - Méthode : `POST`
+     * - Chemin : `/polls`
      * 
      * @async
      * @param req Requête Express
      * @param res Réponse Express
      */
     public async create(req: Request, res: Response): Promise<any> {
-        const body: PollAttributes = req.body;
+        const body = req.body;
 
         try {
             const poll = await this.container.db.polls.create({
@@ -101,102 +97,13 @@ export default class PollController extends V1Controller {
             return res.status(500).json({ error: err.message });
         }
     }
-    
-    /**
-     * Met à jour une ressource.
-     * 
-     * Méthode : `PUT`
-     * Chemin : `/polls/:id`
-     * 
-     * @async
-     * @param req Requête Express
-     * @param res Réponse Express
-     */
-    public async update(req: Request, res: Response): Promise<any> {
-        const params: RequestParams = req.params;
-        const body: PollAttributes = req.body;
-
-        try {
-            const poll = await this.container.db.polls.findById(params.id);
-
-            poll.title = body.title;
-            poll.options = body.options;
-            poll.choices = body.choices;
-
-            await poll.save();
-
-            return res.status(200).json({ poll });
-        } catch (err) {
-            return res.status(500).json({ error: err.message });
-        }
-    }
-
-    /**
-     * Met à jour partiellement une ressource.
-     * 
-     * Méthode : `PATCH`
-     * Chemin : `/polls/:id`
-     * 
-     * @async
-     * @param req Requête Express
-     * @param res Réponse Express
-     */
-    public async modify(req: Request, res: Response): Promise<any> {
-        const params: RequestParams = req.params;
-        const body: PollAttributes = req.body;
-
-        try {
-            const poll = await this.container.db.polls.findById(params.id);
-
-            if (body.title != null) {
-                poll.title = body.title;
-            }
-            if (body.options != null) {
-                poll.options = body.options;
-            }
-            if (body.choices != null) {
-                poll.choices = body.choices;
-            }
-
-            await poll.save();
-
-            return res.status(200).json({ poll });
-        } catch (err) {
-            return res.status(500).json({ error: err.message });
-        }
-    }
-
-    /**
-     * Supprime une resource.
-     * 
-     * Méthode : `DELETE`
-     * Chemin : `/polls/:id`
-     * 
-     * @async
-     * @param req Requête Express
-     * @param res Réponse Express
-     */
-    public async destroy(req: Request, res: Response): Promise<any> {
-        const params: RequestParams = req.params;
-
-        try {
-            const result = await this.container.db.polls.deleteOne({ _id: params.id });
-
-            if (result.ok && result.n > 0) {
-                return res.status(204).json();
-            }
-
-            return res.status(404).json({ error: 'Poll not found' });
-        } catch (err) {
-            return res.status(500).json({ error: err.message });
-        }
-    }
 
     /**
      * Ajoute un voteur à un choix d'un sondage.
      * 
-     * Méthode : `PATCH`
-     * Chemin : `/polls/:id/choice/:choiceId`
+     * Cette méthode est un handler :
+     * - Méthode : `PATCH`
+     * - Chemin : `/polls/:id/choice/:choiceId`
      * 
      * @async
      * @param req Requête Express
