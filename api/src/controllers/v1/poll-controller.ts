@@ -17,15 +17,15 @@ export default class PollController extends V1Controller {
     public constructor(container: ServiceContainer) {
         super(container, '/polls');
 
-        this.showAll = this.showAll.bind(this);
-        this.show = this.show.bind(this);
-        this.create = this.create.bind(this);
-        this.addVoter = this.addVoter.bind(this);
+        this.showAllHandler = this.showAllHandler.bind(this);
+        this.showHandler = this.showHandler.bind(this);
+        this.createHandler = this.createHandler.bind(this);
+        this.addVoterHandler = this.addVoterHandler.bind(this);
 
-        this.registerRoute(Method.GET, '/', this.showAll);
-        this.registerRoute(Method.GET, '/:id', this.show);
-        this.registerRoute(Method.POST, '/', this.create);
-        this.registerRoute(Method.PATCH, '/:id/choices/:choiceId/addVoter', this.addVoter);
+        this.registerRoute(Method.GET, '/', this.showAllHandler);
+        this.registerRoute(Method.GET, '/:id', this.showHandler);
+        this.registerRoute(Method.POST, '/', this.createHandler);
+        this.registerRoute(Method.PATCH, '/:id/choices/:choiceId/addVoter', this.addVoterHandler);
     }
 
     /**
@@ -38,7 +38,7 @@ export default class PollController extends V1Controller {
      * @param req Requête Express
      * @param res Réponse Express
      */
-    public async showAll(req: Request, res: Response): Promise<any> {
+    public async showAllHandler(req: Request, res: Response): Promise<any> {
         const polls = await this.container.db.polls.find();
         
         return res.status(200).json({ polls });
@@ -55,7 +55,7 @@ export default class PollController extends V1Controller {
      * @param req Requête Express
      * @param res Réponse Express
      */
-    public async show(req: Request, res: Response): Promise<any> {
+    public async showHandler(req: Request, res: Response): Promise<any> {
         const params = req.params;
 
         try {
@@ -82,7 +82,7 @@ export default class PollController extends V1Controller {
      * @param req Requête Express
      * @param res Réponse Express
      */
-    public async create(req: Request, res: Response): Promise<any> {
+    public async createHandler(req: Request, res: Response): Promise<any> {
         const body = req.body;
 
         try {
@@ -101,6 +101,8 @@ export default class PollController extends V1Controller {
     /**
      * Ajoute un voteur à un choix d'un sondage.
      * 
+     * Aucun body n'est nécessaire, la méthode va ajouter automatiquement l'adresse IP contenue dans la requête.
+     * 
      * Cette méthode est un handler :
      * - Méthode : `PATCH`
      * - Chemin : `/polls/:id/choice/:choiceId`
@@ -109,7 +111,7 @@ export default class PollController extends V1Controller {
      * @param req Requête Express
      * @param res Réponse Express
      */
-    public async addVoter(req: Request, res: Response): Promise<any> {
+    public async addVoterHandler(req: Request, res: Response): Promise<any> {
         const params = req.params;
 
         try {
