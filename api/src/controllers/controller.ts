@@ -1,4 +1,4 @@
-import { Router, RequestHandler } from "express";
+import { Router, RequestHandler, NextFunction, Response, Request } from "express";
 import ServiceContainer from "../services/service-container";
 
 /**
@@ -27,6 +27,8 @@ export default class Controller {
         this.router = this.createExpressRouter();
         this.rootPath = rootPath;
         this.routes = [];
+
+        this.setResponseHeadersHandler = this.setResponseHeadersHandler.bind(this);
     }
 
     /**
@@ -39,13 +41,27 @@ export default class Controller {
      * @param handlers Fonctions exécutées lorsque la route est déclenchée
      */
     protected registerRoute(method: Method, path: string, ...handlers: RequestHandler[]): void {
-        this.router[method](path, handlers);
+        this.router[method](path, this.setResponseHeadersHandler, handlers);
         this.routes.push({
             name: `${this.constructor.name}#${handlers[handlers.length - 1].name}`,
             method,
             path,
             handlers
         });
+    }
+
+    /**
+     * Ajoute les headers à la réponse.
+     * 
+     * Cette méthode est un handler.
+     * 
+     * @param req Requête Express
+     * @param res Réponse Express
+     * @param next Handler suivant
+     */
+    private async setResponseHeadersHandler(req: Request, res: Response, next: NextFunction): Promise<any> {
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        return next();
     }
 
     /**
