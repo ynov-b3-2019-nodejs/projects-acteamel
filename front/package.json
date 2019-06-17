@@ -1,21 +1,47 @@
 {
-    "name": "pollstar-front",
-    "version": "1.0.0",
-    "description": "Pollstar front",
-    "main": "build/app.js",
-    "repository": "https://github.com/ynov-b3-2019-nodejs/projects-acteamel.git",
-    "author": "Jérémy Surieux <jeremy.surieux@ynov.com>",
+  "name": "pollstar-front",
+  "version": "1.0.0",
+  "description": "Pollstar front",
+  "private": true,
+  "dependencies": {
+    "react": "^16.8.6",
+    "react-bootstrap": "^1.0.0-beta.9",
+    "react-dom": "^16.8.6",
+    "react-router-dom": "^5.0.1",
+    "react-scripts": "3.0.1",
+    "socket.io-client": "^2.2.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "repository": "https://github.com/ynov-b3-2019-nodejs/projects-acteamel.git",
+    "author": "Théo Schmidt <theo.schmidt@ynov.com>",
     "contributors": [
+      {
+        "name": "Jérémy Surieux",
+        "email": "jeremy.surieux@ynov.com"
+      },
       {
         "name": "Camille Legey",
         "email": "camille.legey@ynov.com"
-      },
-      {
-        "name": "Théo Schmidt",
-        "email": "theo.schmidt@ynov.com"
       }
-    ],
-    "license": "MIT",
-    "private": true
-  }
-  
+    ]
+}
