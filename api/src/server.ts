@@ -1,6 +1,7 @@
 import * as Express from 'express';
 import bodyParser = require('body-parser');
 import helmet = require('helmet');
+import cors = require('cors');
 import ServiceContainer from './services/service-container';
 import Controller from './controllers/controller';
 import PollController from './controllers/v1/poll-controller';
@@ -72,6 +73,7 @@ export default class Server {
         app.use(bodyParser.urlencoded({ extended: true }));
         app.use(bodyParser.json());
         app.use(helmet());
+        app.use(cors());
         
         return app;
     }
