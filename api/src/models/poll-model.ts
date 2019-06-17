@@ -57,8 +57,10 @@ export interface PollAttributes extends Attributes {
         multiple: boolean;
     },
     choices: [{
+        _id?: string;
         name: string;
         voters: [{
+            _id?: string;
             ip: string;
         }]
     }]
