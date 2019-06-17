@@ -60,6 +60,9 @@ export default class Server {
         }
         
         this.app.listen(process.env.API_PORT, () => console.log(`Server is listening on port ${process.env.API_PORT}`));
+
+        this.container.socket.start();
+        console.log(`WebSocket is listening on port ${process.env.WEBSOCKET_PORT}`)
     }
 
     /**
