@@ -5,8 +5,8 @@
             "type": "node",
             "request": "launch",
             "name": "Launch API",
-            "program": "${workspaceFolder}\\api\\build\\app.js",
-            "preLaunchTask": "tsc: build - api\\tsconfig.json",
+            "program": "${workspaceFolder}/api/build/app.js",
+            "preLaunchTask": "tsc: build - api/tsconfig.json",
             "outFiles": [
                 "${workspaceFolder}/api/build/**/*.js"
             ]
