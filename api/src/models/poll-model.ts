@@ -1,26 +1,6 @@
 import { Attributes } from "./model";
 import { Document, Schema, Mongoose, Model } from "mongoose";
 
-export interface PollAttributes extends Attributes {
-    title: string;
-    options: {
-        ipChecking: boolean;
-        multiple: boolean;
-    },
-    choices: [{
-        name: string;
-        voters: [{
-            ip: string;
-        }]
-    }]
-}
-
-
-
-export interface PollInstance extends PollAttributes, Document {}
-
-
-
 const schema = new Schema<PollInstance>({
     title: {
         type: Schema.Types.String,
@@ -55,6 +35,38 @@ const schema = new Schema<PollInstance>({
 
 
 
+/**
+ * Crée le modèle.
+ * 
+ * @param mongooseInstance Instance de Mongoose
+ * @returns Modèle créé
+ */
 export default function createModel(mongooseInstance: Mongoose): Model<PollInstance> {
     return mongooseInstance.model<PollInstance>('Poll', schema);
 }
+
+
+
+/**
+ * Interface regroupant les attributs du modèle.
+ */
+export interface PollAttributes extends Attributes {
+    title: string;
+    options: {
+        ipChecking: boolean;
+        multiple: boolean;
+    },
+    choices: [{
+        name: string;
+        voters: [{
+            ip: string;
+        }]
+    }]
+}
+
+
+
+/**
+ * Interface de l'instance du modèle.
+ */
+export interface PollInstance extends PollAttributes, Document {}
