@@ -9,7 +9,7 @@ export default class ResultPoll extends React.Component {
         this.state = {
             poll: null,
             socket: {
-                endpoint: `http://localhost:${process.env.WEBSOCKET_PORT || 8000}`,
+                endpoint: 'http://localhost:8000',
                 data: null
             }
         }
