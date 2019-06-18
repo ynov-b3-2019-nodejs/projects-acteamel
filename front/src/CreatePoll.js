@@ -13,6 +13,7 @@ export default class CreatePoll extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    // Ajoute un choix
     addChoice(e, i) {
         if (this.state.choices.length -1 === i) {
             this.setState({
@@ -21,11 +22,13 @@ export default class CreatePoll extends React.Component {
         }
     }
 
+    // Mets à jour les valeurs des choix
     handleChange(e, i) {
         this.state.choices[i] = e.target.value;
         this.setState({ choices: this.state.choices });
     }
 
+    // Envoi le formulaire de création de vote
     async handleSubmit(e) {
         e.preventDefault();
         const data = new FormData(e.target);

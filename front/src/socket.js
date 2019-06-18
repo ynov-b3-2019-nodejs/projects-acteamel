@@ -1,5 +1,6 @@
 const io = require('socket.io')();
 
+// Demarre le socket
 export default function start() {
     io.on('connection', socket => {
         console.log('Client is connected');

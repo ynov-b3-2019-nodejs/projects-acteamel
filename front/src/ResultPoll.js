@@ -17,10 +17,12 @@ export default class ResultPoll extends React.Component {
         this.loadPoll = this.loadPoll.bind(this);
     }
 
+    // Charge le composant
     componentDidMount() {
         this.loadPoll();
     }
 
+    // Charge le vote
     async loadPoll() {
         const res = await fetch(`http://localhost/v1/polls/${this.props.match.params.id}`, {
             method: 'GET'
@@ -30,6 +32,7 @@ export default class ResultPoll extends React.Component {
         this.setState({ poll: json.poll }, () => this.loadSocket());
     }
 
+    // Charge le web socket
     loadSocket() {
         const socket = socketIOClient(this.state.socket.endpoint);
         socket.emit('will-refresh-voters', { pollId: this.state.poll._id });

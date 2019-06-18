@@ -13,10 +13,12 @@ export default class ShowPoll extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    // Charge le composant
     componentDidMount() {
         this.loadPoll();
     }
 
+    // Charge le vote
     async loadPoll() {
         const res = await fetch(`http://localhost/v1/polls/${this.props.match.params.id}`, {
             method: 'GET'
@@ -26,6 +28,7 @@ export default class ShowPoll extends React.Component {
         this.setState({ poll: json.poll });
     }
 
+    // Envoi du formulaire de vote
     async handleSubmit(e) {
         e.preventDefault();
 

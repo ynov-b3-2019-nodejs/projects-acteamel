@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Header from './Header';
 import Footer from './Footer';
 
+// Route vers les différentes sections du site
 const App = () => (
     <Router>
         <Header />
